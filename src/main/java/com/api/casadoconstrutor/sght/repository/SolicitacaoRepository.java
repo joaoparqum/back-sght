@@ -18,4 +18,6 @@ public interface SolicitacaoRepository extends JpaRepository<Solicitacao, Long> 
     // Recupera todas as solicitações (para ADMINs)
     List<Solicitacao> findAll();
 
+    @Query("SELECT s FROM Solicitacao s JOIN FETCH s.user")
+    List<Solicitacao> findAllWithUser();
 }

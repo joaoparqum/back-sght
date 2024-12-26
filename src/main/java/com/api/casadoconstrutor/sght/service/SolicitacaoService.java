@@ -1,5 +1,6 @@
 package com.api.casadoconstrutor.sght.service;
 
+import com.api.casadoconstrutor.sght.dto.SolicitacaoDto;
 import com.api.casadoconstrutor.sght.enuns.StatusSolicitacao;
 import com.api.casadoconstrutor.sght.model.Solicitacao;
 import com.api.casadoconstrutor.sght.repository.SolicitacaoRepository;
@@ -23,12 +24,8 @@ public class SolicitacaoService {
         return solicitacaoRepository.save(solicitacao);
     }
 
-    public List<Solicitacao> getSolicitacoes(User user) {
-        if (user.getRole() != UserRole.ADMIN) {
-            return solicitacaoRepository.findAll();
-        } else {
-            return solicitacaoRepository.findByUserId(user.getId());
-        }
+    public List<Solicitacao> getSolicitacoesByUser(User user) {
+        return solicitacaoRepository.findByUserId(user.getId());
     }
 
     public Solicitacao criarSolicitacao(Solicitacao solicitacao, User user) {
@@ -50,6 +47,13 @@ public class SolicitacaoService {
 
     public List<Solicitacao> findAll() {
         return solicitacaoRepository.findAll();
+    }
+
+    public List<SolicitacaoDto> findAllSolicitacoesWithUsers() {
+        List<Solicitacao> solicitacoes = solicitacaoRepository.findAllWithUser();
+        return solicitacoes.stream()
+                .map(SolicitacaoDto::fromEntity)
+                .toList();
     }
 
     public Optional<Solicitacao> findById(Long id) {
