@@ -47,8 +47,8 @@ public class SolicitacaoController {
     @PatchMapping("/{id}/status")
     public ResponseEntity<SolicitacaoDto> alterarStatus(
             @AuthenticationPrincipal User user,
-            @PathVariable Long id,
-            @RequestParam StatusSolicitacao status) throws AccessDeniedException {
+            @PathVariable("id") Long id,
+            @RequestParam("status") StatusSolicitacao status) throws AccessDeniedException {
         Solicitacao solicitacao = solicitacaoService.aprovarOuRejeitarSolicitacao(id, status, user);
         return ResponseEntity.ok(SolicitacaoDto.fromEntity(solicitacao));
     }
