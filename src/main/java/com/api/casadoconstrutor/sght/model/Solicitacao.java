@@ -22,6 +22,7 @@ public class Solicitacao implements Serializable {
     private String motivo;
     private int horasSolicitadas;
     private StatusSolicitacao status;
+    private boolean visto = false;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -77,5 +78,13 @@ public class Solicitacao implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public boolean isVisto() {
+        return visto;
+    }
+
+    public void setVisto(boolean visto) {
+        this.visto = visto;
     }
 }

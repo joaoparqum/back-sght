@@ -53,6 +53,18 @@ public class SolicitacaoController {
         return ResponseEntity.ok(SolicitacaoDto.fromEntity(solicitacao));
     }
 
+    @PutMapping("/marcar-vistas")
+    public ResponseEntity<Void> marcarVistas() {
+        solicitacaoService.marcarTodasComoVistas();
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/nao-vistas")
+    public ResponseEntity<List<SolicitacaoDto>> getNaoVistas() {
+        List<SolicitacaoDto> naoVistas = solicitacaoService.buscarNaoVistas();
+        return ResponseEntity.ok(naoVistas);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteTarefa(@PathVariable(value = "id") Long id){
         Optional<Solicitacao> solOptional = solicitacaoService.findById(id);

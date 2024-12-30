@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class SolicitacaoService {
@@ -63,5 +64,19 @@ public class SolicitacaoService {
     public void delete(Solicitacao solicitacao) {
         solicitacaoRepository.delete(solicitacao);
     }
+
+    public void marcarTodasComoVistas() {
+        List<Solicitacao> naoVistas = solicitacaoRepository.findNaoVistas();
+        naoVistas.forEach(s -> s.setVisto(true));
+        solicitacaoRepository.saveAll(naoVistas);
+    }
+
+    public List<SolicitacaoDto> buscarNaoVistas() {
+        List<Solicitacao> naoVistas = solicitacaoRepository.findByVistoFalse();
+        return naoVistas.stream()
+                .map(SolicitacaoDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
 
 }

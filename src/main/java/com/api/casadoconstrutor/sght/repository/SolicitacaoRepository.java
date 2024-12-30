@@ -20,4 +20,9 @@ public interface SolicitacaoRepository extends JpaRepository<Solicitacao, Long> 
 
     @Query("SELECT s FROM Solicitacao s JOIN FETCH s.user")
     List<Solicitacao> findAllWithUser();
+
+    @Query("SELECT s FROM Solicitacao s WHERE s.visto = false")
+    List<Solicitacao> findNaoVistas();
+
+    List<Solicitacao> findByVistoFalse();
 }
