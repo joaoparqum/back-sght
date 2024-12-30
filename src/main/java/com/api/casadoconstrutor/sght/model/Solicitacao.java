@@ -27,6 +27,10 @@ public class Solicitacao implements Serializable {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    public Solicitacao() {
+        this.status = StatusSolicitacao.PENDENTE;
+    }
+
     public Long getId() {
         return id;
     }

@@ -34,7 +34,7 @@ public record SolicitacaoDto(
         solicitacao.setData(dto.data());
         solicitacao.setMotivo(dto.motivo());
         solicitacao.setHorasSolicitadas(dto.horasSolicitadas());
-        solicitacao.setStatus(StatusSolicitacao.valueOf(dto.status())); // Converte a String de volta para enum
+        //solicitacao.setStatus(StatusSolicitacao.valueOf(dto.status())); // Converte a String de volta para enum
         solicitacao.setUser(user);
         return solicitacao;
     }
