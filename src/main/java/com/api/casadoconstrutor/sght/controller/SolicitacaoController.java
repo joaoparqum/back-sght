@@ -1,10 +1,13 @@
 package com.api.casadoconstrutor.sght.controller;
 
+import com.api.casadoconstrutor.sght.dto.SimpleSolicitacaoDto;
 import com.api.casadoconstrutor.sght.dto.SolicitacaoDto;
 import com.api.casadoconstrutor.sght.enuns.StatusSolicitacao;
 import com.api.casadoconstrutor.sght.model.Solicitacao;
 import com.api.casadoconstrutor.sght.service.SolicitacaoService;
 import com.api.casadoconstrutor.sght.user.User;
+import jakarta.validation.Valid;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -36,6 +39,33 @@ public class SolicitacaoController {
     public ResponseEntity<List<SolicitacaoDto>> getAllSolicitacoes() {
         List<SolicitacaoDto> solicitacoes = solicitacaoService.findAllSolicitacoesWithUsers();
         return ResponseEntity.ok(solicitacoes);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getOneSolicitacao(@PathVariable(value = "id") Long id) {
+        Optional<Solicitacao> solicitacao = solicitacaoService.findById(id);
+        if(!solicitacao.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Solicitação não encontrada!!");
+        }
+        return ResponseEntity.ok(SimpleSolicitacaoDto.fromEntity(solicitacao.get()));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateSolicitacao(@PathVariable(value = "id") Long id, @RequestBody
+                                                    @Valid SimpleSolicitacaoDto solicitacaoDto) {
+        Optional<Solicitacao> solicitacaoOptional = solicitacaoService.findById(id);
+        if(!solicitacaoOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Solicitação não encontrada!!");
+        }
+        Solicitacao solicitacao = solicitacaoOptional.get();
+
+        solicitacao.setData(solicitacaoDto.data());
+        solicitacao.setMotivo(solicitacaoDto.motivo());
+        solicitacao.setHorasSolicitadas(solicitacaoDto.horasSolicitadas());
+
+        solicitacaoService.save(solicitacao);
+
+        return ResponseEntity.status(HttpStatus.OK).body(SimpleSolicitacaoDto.fromEntity(solicitacao));
     }
 
     @PostMapping
