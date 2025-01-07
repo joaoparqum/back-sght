@@ -26,7 +26,20 @@ public class HorasController {
     public ResponseEntity<Object> saveHoras(@RequestBody @Valid HorasDto horasDto){
         HorasValidas horasValidas = new HorasValidas();
         BeanUtils.copyProperties(horasDto, horasValidas);
+
+        String total = horasService.calcularTotal(horasValidas);
+        horasValidas.setTotal(total);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(horasService.save(horasValidas));
+    }
+
+    @GetMapping("/nome/{nomeColaborador}")
+    public ResponseEntity<Object> getHorasByNome(@PathVariable(value = "nomeColaborador") String nomeColaborador) {
+        List<HorasValidas> horasValidas = horasService.findByNomeColaborador(nomeColaborador);
+        if(horasValidas.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Hora Válida não encontrada!!");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(horasValidas);
     }
 
     @GetMapping

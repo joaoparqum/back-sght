@@ -4,6 +4,8 @@ import com.api.casadoconstrutor.sght.enuns.Filial;
 import com.api.casadoconstrutor.sght.model.HorasValidas;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.Duration;
+
 public record HorasDto(
         Long id,
         @NotNull String nomeColaborador,

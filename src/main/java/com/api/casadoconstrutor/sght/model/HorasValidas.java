@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.Duration;
 
 @Entity
 @Table(name = "tb_horas")
@@ -33,6 +34,6 @@ public class HorasValidas implements Serializable {
     private String abril;
     private String maio;
     private String junho;
-
+    private String total;
 
 }
