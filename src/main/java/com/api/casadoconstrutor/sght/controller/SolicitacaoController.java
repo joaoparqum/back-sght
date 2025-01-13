@@ -1,8 +1,11 @@
 package com.api.casadoconstrutor.sght.controller;
 
+import com.api.casadoconstrutor.sght.dto.HorasDto;
 import com.api.casadoconstrutor.sght.dto.SimpleSolicitacaoDto;
 import com.api.casadoconstrutor.sght.dto.SolicitacaoDto;
+import com.api.casadoconstrutor.sght.enuns.Filial;
 import com.api.casadoconstrutor.sght.enuns.StatusSolicitacao;
+import com.api.casadoconstrutor.sght.model.HorasValidas;
 import com.api.casadoconstrutor.sght.model.Solicitacao;
 import com.api.casadoconstrutor.sght.service.SolicitacaoService;
 import com.api.casadoconstrutor.sght.user.User;
@@ -14,7 +17,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.file.AccessDeniedException;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -103,6 +108,37 @@ public class SolicitacaoController {
         }
         solicitacaoService.delete(solOptional.get());
         return ResponseEntity.status(HttpStatus.OK).body("Solicitação deletada com sucesso!");
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<SolicitacaoDto> alterarSolicitacao(@PathVariable("id") Long id,
+                                                       @RequestBody Map<String, String> params) {
+
+        Optional<Solicitacao> solicitacaoOptional = solicitacaoService.findById(id);
+        if (solicitacaoOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        Solicitacao solicitacao = solicitacaoOptional.get();
+
+        params.forEach((key, value) -> {
+            switch (key) {
+                case "data":
+                    solicitacao.setData(LocalDateTime.parse(value));
+                    break;
+                case "motivo":
+                    solicitacao.setMotivo(value);
+                    break;
+                case "horasSolicitadas":
+                    solicitacao.setHorasSolicitadas(Integer.parseInt(value));
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        Solicitacao solicitacoesAtualizadas = solicitacaoService.save(solicitacao);
+        return ResponseEntity.status(HttpStatus.OK).body(SolicitacaoDto.fromEntity(solicitacoesAtualizadas));
     }
 
 }
