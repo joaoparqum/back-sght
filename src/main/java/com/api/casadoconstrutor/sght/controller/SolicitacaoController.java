@@ -46,6 +46,24 @@ public class SolicitacaoController {
         return ResponseEntity.ok(solicitacoes);
     }
 
+    @GetMapping("/nome/{login}")
+    public ResponseEntity<Object> getSolicitacaoByNome(@PathVariable(value = "login") String login) {
+        List<Solicitacao> solicitacoes = solicitacaoService.findByUserLogin(login);
+        if (solicitacoes.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Solicitação não encontrada!");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(solicitacoes);
+    }
+
+    @GetMapping("/motivo/{motivo}")
+    public ResponseEntity<Object> getSolicitacaoByMotivo(@PathVariable(value = "motivo") String motivo) {
+        List<Solicitacao> solicitacao = solicitacaoService.findByMotivo(motivo);
+        if(solicitacao.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Solicitação não encontrada!!");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(solicitacao);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Object> getOneSolicitacao(@PathVariable(value = "id") Long id) {
         Optional<Solicitacao> solicitacao = solicitacaoService.findById(id);

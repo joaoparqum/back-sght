@@ -43,6 +43,8 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.DELETE, "/solicitacoes/*").permitAll()
                         .requestMatchers(HttpMethod.PATCH, "/solicitacoes/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/solicitacoes/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/solicitacoes/nome/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/solicitacoes/motivo/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/horas").permitAll()
                         .requestMatchers(HttpMethod.GET, "/horas/*").permitAll()
                         .requestMatchers(HttpMethod.POST, "/horas").hasRole("ADMIN")

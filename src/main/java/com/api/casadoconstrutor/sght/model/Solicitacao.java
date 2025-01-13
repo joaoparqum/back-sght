@@ -2,6 +2,7 @@ package com.api.casadoconstrutor.sght.model;
 
 import com.api.casadoconstrutor.sght.enuns.StatusSolicitacao;
 import com.api.casadoconstrutor.sght.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -26,6 +27,7 @@ public class Solicitacao implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private User user;
 
     public Solicitacao() {

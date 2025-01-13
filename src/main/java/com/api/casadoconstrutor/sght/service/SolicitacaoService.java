@@ -78,5 +78,13 @@ public class SolicitacaoService {
                 .collect(Collectors.toList());
     }
 
+    public List<Solicitacao> findByUserLogin(String login) {
+        return solicitacaoRepository.findByUserLogin(login);
+    }
+
+    public List<Solicitacao> findByMotivo(String motivo) {
+        return solicitacaoRepository.findByMotivoContaining(motivo);
+    }
+
 
 }

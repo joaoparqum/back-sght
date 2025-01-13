@@ -25,4 +25,9 @@ public interface SolicitacaoRepository extends JpaRepository<Solicitacao, Long> 
     List<Solicitacao> findNaoVistas();
 
     List<Solicitacao> findByVistoFalse();
+
+    @Query("SELECT s FROM Solicitacao s WHERE s.user.login = :login")
+    List<Solicitacao> findByUserLogin(@Param("login") String login);
+
+    List<Solicitacao> findByMotivoContaining(String motivo);
 }

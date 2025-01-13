@@ -145,6 +145,9 @@ public class HorasController {
             }
         });
 
+        String total = horasService.calcularTotal(horasValidas);
+        horasValidas.setTotal(total);
+
         HorasValidas horasAtualizadas = horasService.save(horasValidas);
         return ResponseEntity.status(HttpStatus.OK).body(HorasDto.fromEntity(horasAtualizadas));
     }
