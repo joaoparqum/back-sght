@@ -51,6 +51,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.PATCH, "/horas/*").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/horas").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/horas").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/comprovante/view/*").permitAll()
                         //requestMatchers(HttpMethod.GET, "/**").permitAll()
                         .anyRequest().authenticated()
                 )

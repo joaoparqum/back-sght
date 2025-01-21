@@ -1,6 +1,7 @@
 package com.api.casadoconstrutor.sght.dto;
 
 import com.api.casadoconstrutor.sght.enuns.StatusSolicitacao;
+import com.api.casadoconstrutor.sght.model.Comprovante;
 import com.api.casadoconstrutor.sght.model.Solicitacao;
 import com.api.casadoconstrutor.sght.user.User;
 import jakarta.validation.constraints.NotNull;
@@ -13,7 +14,8 @@ public record SolicitacaoDto(
         @NotNull String motivo,
         int horasSolicitadas,
         @NotNull String status,
-        @NotNull String userLogin
+        @NotNull String userLogin,
+        @NotNull Comprovante comprovante
 ) {
     // Converte uma entidade Solicitacao para SolicitacaoDTO
     public static SolicitacaoDto fromEntity(Solicitacao solicitacao) {
@@ -23,7 +25,8 @@ public record SolicitacaoDto(
                 solicitacao.getMotivo(),
                 solicitacao.getHorasSolicitadas(),
                 solicitacao.getStatus().name(),
-                solicitacao.getUser().getLogin()
+                solicitacao.getUser().getLogin(),
+                solicitacao.getComprovante()
         );
     }
 
@@ -36,6 +39,7 @@ public record SolicitacaoDto(
         solicitacao.setHorasSolicitadas(dto.horasSolicitadas());
         //solicitacao.setStatus(StatusSolicitacao.valueOf(dto.status())); // Converte a String de volta para enum
         solicitacao.setUser(user);
+        solicitacao.setComprovante(dto.comprovante());
         return solicitacao;
     }
 
