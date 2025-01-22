@@ -8,9 +8,11 @@ import com.api.casadoconstrutor.sght.user.User;
 import com.api.casadoconstrutor.sght.user.UserRole;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.AccessDeniedException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,6 +29,12 @@ public class SolicitacaoService {
 
     public List<Solicitacao> getSolicitacoesByUser(User user) {
         return solicitacaoRepository.findByUserId(user.getId());
+    }
+
+    @Scheduled(fixedRate = 3600000) // Executa a cada 1 hora
+    public void limparSolicitacoesExpiradas() {
+        LocalDateTime limite = LocalDateTime.now().minusHours(24);
+        solicitacaoRepository.deleteByDataCriacaoBefore(limite);
     }
 
     public Solicitacao criarSolicitacao(Solicitacao solicitacao, User user) {

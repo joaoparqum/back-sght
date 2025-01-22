@@ -26,6 +26,9 @@ public class Solicitacao implements Serializable {
     private StatusSolicitacao status;
     private boolean visto = false;
 
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime dataCriacao = LocalDateTime.now();
+
     @OneToOne(cascade = CascadeType.ALL)
     private Comprovante comprovante;
 
