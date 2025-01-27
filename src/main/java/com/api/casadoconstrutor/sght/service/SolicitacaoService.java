@@ -10,6 +10,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
@@ -31,8 +32,8 @@ public class SolicitacaoService {
         return solicitacaoRepository.findByUserId(user.getId());
     }
 
-    @Scheduled(fixedRate = 3600000) // Executa a cada 1 hora
-    public void limparSolicitacoesExpiradas() {
+    @Transactional
+    public void limparSolicitacoes() {
         LocalDateTime limite = LocalDateTime.now().minusHours(24);
         solicitacaoRepository.deleteByDataCriacaoBefore(limite);
     }

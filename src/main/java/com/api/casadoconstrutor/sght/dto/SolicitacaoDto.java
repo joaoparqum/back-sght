@@ -1,6 +1,5 @@
 package com.api.casadoconstrutor.sght.dto;
 
-import com.api.casadoconstrutor.sght.enuns.StatusSolicitacao;
 import com.api.casadoconstrutor.sght.model.Comprovante;
 import com.api.casadoconstrutor.sght.model.Solicitacao;
 import com.api.casadoconstrutor.sght.user.User;

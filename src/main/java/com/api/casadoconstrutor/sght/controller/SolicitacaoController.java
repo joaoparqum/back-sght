@@ -32,6 +32,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/solicitacoes")
@@ -65,8 +66,14 @@ public class SolicitacaoController {
         if (solicitacoes.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Solicitação não encontrada!");
         }
-        return ResponseEntity.status(HttpStatus.OK).body(solicitacoes);
+
+        List<SolicitacaoDto> solicitacaoDTOs = solicitacoes.stream()
+                .map(SolicitacaoDto::fromEntity)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(solicitacaoDTOs);
     }
+
 
     @GetMapping("/motivo/{motivo}")
     public ResponseEntity<Object> getSolicitacaoByMotivo(@PathVariable(value = "motivo") String motivo) {
