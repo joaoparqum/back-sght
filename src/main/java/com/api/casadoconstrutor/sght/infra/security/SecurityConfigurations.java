@@ -35,23 +35,23 @@ public class SecurityConfigurations {
                 .cors().and()// Habilita CORS global
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/solicitacoes").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/solicitacoes").hasRole("USER")
-                        .requestMatchers(HttpMethod.PATCH, "/solicitacoes/*/status").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/solicitacoes/*").permitAll()
-                        .requestMatchers(HttpMethod.PATCH, "/solicitacoes/*").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/solicitacoes/*").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/solicitacoes/nome/*").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/solicitacoes/motivo/*").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/horas").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/horas/*").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/horas").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PATCH, "/horas/*").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/horas").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/horas").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/comprovante/view/*").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/sght/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/sght/auth/register").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/sght/solicitacoes").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/sght/solicitacoes").hasRole("USER")
+                        .requestMatchers(HttpMethod.PATCH, "/api/sght/solicitacoes/*/status").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/sght/solicitacoes/*").permitAll()
+                        .requestMatchers(HttpMethod.PATCH, "/api/sght/solicitacoes/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/sght/solicitacoes/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/sght/solicitacoes/nome/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/sght/solicitacoes/motivo/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/sght/horas").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/sght/horas/*").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/sght/horas").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/api/sght/horas/*").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/sght/horas").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/sght/horas").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/sght/comprovante/view/*").permitAll()
                         //requestMatchers(HttpMethod.GET, "/**").permitAll()
                         .anyRequest().authenticated()
                 )
@@ -72,7 +72,7 @@ public class SecurityConfigurations {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+        configuration.setAllowedOrigins(Arrays.asList("http://24.144.93.247"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);

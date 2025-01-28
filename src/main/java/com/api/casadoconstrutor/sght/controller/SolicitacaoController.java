@@ -35,7 +35,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/solicitacoes")
+@RequestMapping("/api/sght/solicitacoes")
 public class SolicitacaoController {
 
     final SolicitacaoService solicitacaoService;
