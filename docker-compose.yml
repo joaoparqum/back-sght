@@ -1,22 +1,24 @@
 version: '3'
 services:
-  postgres:
+  postgres-sght:
+    container_name: postgres-sght
     image: postgres:15
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: hanamichi
       POSTGRES_DB: sght-db
     networks:
-      - app-net
+      - sght-net
 
-  frontend:
+  frontend-sght:
+    container_name: frontend-sght
     build: ../front-sght/.
     ports:
       - 5174:80
     networks:
-      - app-net
+      - sght-net
 
-  spring-app:
+  spring-sght:
     build: .
     container_name: back-spring
     ports:
@@ -24,15 +26,15 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=hanamichi
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/sght-db
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-sght:5432/sght-db
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=hanamichi
       - SPRING_JPA_HIBERNATE_DDL_AUTO=create
     depends_on:
-      - postgres
+      - postgres-sght
     networks:
-      - app-net
+      - sght-net
 
 networks:
-  app-net:
+  sght-net:
     driver: bridge
