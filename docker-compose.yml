@@ -11,7 +11,7 @@ services:
 
   spring-sght:
     build: .
-    container_name: back-spring
+    container_name: spring-sght
     restart: always
     ports:
       - "8081:8080"
